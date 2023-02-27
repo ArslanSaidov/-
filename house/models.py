@@ -45,9 +45,11 @@ Location = [
 
 class House(Model):
     type = CharField(max_length=25, choices=Type_choise)
+    date_added = DateTimeField(null=True, auto_now_add=True)
     title = CharField(max_length=255)
     bio = TextField()
     address = CharField(max_length=255)
+    preview = ImageField(null=True, blank=True)
     price = IntegerField()
     size = IntegerField()
     material = CharField(max_length=255, choices=Material_choise)

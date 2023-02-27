@@ -9,6 +9,7 @@ class BaseForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     bio = forms.TextInput()
     address = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    preview = forms.ImageField()
     price = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input has-text-centered'}))
     size = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input has-text-centered'}))
     material = forms.ChoiceField(choices=Material_choise)
@@ -23,7 +24,7 @@ class BaseForm(forms.ModelForm):
     class Meta:
         model = House
         fields = [
-            'type', 'title', 'bio', 'address',
+            'type', 'title', 'bio', 'address', 'preview',
             'price',
             'size', 'material', 'rooms', 'furniture', 'repair',
             'near', 'date_of_building', ]

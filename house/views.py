@@ -3,7 +3,8 @@ from .models import *
 from .forms import *
 
 def home(request):
-    return render(request, 'home.html')
+    houses = House.objects.all()
+    return render(request, 'home.html', {'houses':houses})
 
 
 def create(request):
@@ -39,3 +40,8 @@ def create_house(request, pk):
         form.save()
         return redirect('nedviga:home')
     return render(request, 'create_house.html', {'form': form})
+
+
+def detail(request, pk):
+    house = House.objects.get(pk=pk)
+    return render(request, 'detail.html', {'house': house})
