@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="box">
-    <form method="post" action="">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="input-container">
-            <label for="{{ field.id_for_label }}" class="label">{{ field.name }}</label><br>
-            {{ field }}
+    <div class="form" style="padding: 20px">
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="" class="label-create">
+                    Тип строения
+                </label>
+                {{ form.building_type }}
             </div>
-        {% endfor %}
-        <button type="submit">HHH</button>
-    </form>
+            <div class="input-box">
+                <label for="" class="label-create">
+                    На каком этаже
+                </label>
+                {{ form.floor }}
+            </div>
+            <div class="input-box">
+                <label for="" class="label-create">
+                    Количество этажей
+                </label>
+                {{ form.storeys }}
+            </div>
+            <button class="form-button" type="submit">Создать</button>
+        </form>
     </div>
 {% endblock %}

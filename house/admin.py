@@ -3,3 +3,4 @@ from .models import *
 from .base_model import *
 
 admin.site.register(House)
+admin.site.register(Image)
