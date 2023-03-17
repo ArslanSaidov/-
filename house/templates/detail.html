@@ -3,11 +3,11 @@
     {{ house.title }}
 {% endblock %}
 {% block content %}
-    <h1>{{ house.title }}</h1>
-    <p style="color: aqua">{{ house.date_added }}</p>
-    <h1 style=" margin-top: 70px; color: aqua; font-size: 30px; font-weight: bold">{{ house.rooms }}-комнатная, {{ house.type }},{{ house.size }}м²</h1>
-    <div style="display:flex;justify-content: center">
-        <div class="slideshow-container">
+    <h1 style="margin-left: 20px">{{ house.title }}</h1>
+    <p style="color: aqua;margin-left: 20px">{{ house.date_added }}</p>
+    <h1 style=" margin-top: 70px;margin-left: 20px; color: aqua; font-size: 30px; font-weight: bold">{{ house.rooms }}-комнатная, {{ house.type }},{{ house.size }}м²</h1>
+    <div style="display:flex;justify-content:left">
+        <div class="slideshow-container" style="height: 1000px;width: 1000px; margin-left: 20px">
             {% for image in images %}
                 <div class="mySlides fade">
                     <img src="{{ image.image1.url }}" alt="">
@@ -63,6 +63,7 @@
             {% endfor %}
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            <p style="margin-left: 20px">{{ house.bio }}</p>
         </div>
     </div>
 {% endblock %}

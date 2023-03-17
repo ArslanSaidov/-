@@ -97,7 +97,7 @@ class Image(Model):
     image13 = ImageField(null=True)
     image14 = ImageField(null=True)
     image15 = ImageField(null=True)
-    image16 = ImageField(null=True)
+    image17 = ImageField(null=True)
 
     def __str__(self):
         return str(self.house)

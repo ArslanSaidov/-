@@ -7,22 +7,26 @@
     <div id="login" class="section1">
         <div class="section1">
             <div class="title">Зарегистрироваться</div>
-            <form method="post" class="form-login" action="">
+            <form method="post" class="form-login" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <div class="input-box">
                     <label for="">Придумайте никнейм</label> <br>
+                    <h1 class="error">{{ user_form.username.errors }}</h1>
                     {{ user_form.username }}
                 </div>
                 <div class="input-box">
                     <label for="">Придумайте пароль</label> <br>
+                    <h1 class="error">{{ user_form.password1.errors }}</h1>
                     {{ user_form.password1 }}
                 </div>
                 <div class="input-box">
-                    <label for="">Повторите ваш никнейм</label> <br>
+                    <label for="">Повторите ваш пароль</label> <br>
+                    <h1 class="error">{{ user_form.password2.errors }}</h1>
                     {{ user_form.password2 }}
                 </div>
                 <div class="input-box">
                     <label for="">Введите полное имя</label> <br>
+                    <h1 class="error">{{ user_form.full_name.errors }}</h1>
                     {{ profile_form.full_name }}
                 </div>
                 <div class="input-box">
