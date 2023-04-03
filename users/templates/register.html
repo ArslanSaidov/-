@@ -4,38 +4,26 @@
     Создать аккаунт
 {% endblock %}
 {% block content %}
-    <div id="login" class="section1">
-        <div class="section1">
-            <div class="title">Зарегистрироваться</div>
-            <form method="post" class="form-login" enctype="multipart/form-data" action="">
-                {% csrf_token %}
-                <div class="input-box">
-                    <label for="">Придумайте никнейм</label> <br>
-                    <h1 class="error">{{ user_form.username.errors }}</h1>
-                    {{ user_form.username }}
+    <div>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in user_form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
                 </div>
-                <div class="input-box">
-                    <label for="">Придумайте пароль</label> <br>
-                    <h1 class="error">{{ user_form.password1.errors }}</h1>
-                    {{ user_form.password1 }}
+            {% endfor %}
+            <button type="submit" class="button background-light-orange">Войти</button>
+        </form>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in profile_form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
                 </div>
-                <div class="input-box">
-                    <label for="">Повторите ваш пароль</label> <br>
-                    <h1 class="error">{{ user_form.password2.errors }}</h1>
-                    {{ user_form.password2 }}
-                </div>
-                <div class="input-box">
-                    <label for="">Введите полное имя</label> <br>
-                    <h1 class="error">{{ user_form.full_name.errors }}</h1>
-                    {{ profile_form.full_name }}
-                </div>
-                <div class="input-box">
-                    <label for="">Выберите аватар</label> <br>
-                    {{ profile_form.avatar }}
-                </div>
-                <button class="login-bt" type="submit">Создать аккаунт</button>
-{#                <a class="login-bt" href="{% url 'social:begin' 'facebook' %}">Войти через Facebook</a>#}
-            </form>
-        </div>
+            {% endfor %}
+            <button type="submit" class="button background-light-orange">Зарегистрироваться</button>
+        </form>
     </div>
 {% endblock %}

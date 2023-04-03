@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models import *
+from django.db.models.fields import related
 
 Material_choise = [
     ('дерево', 'дерево'),
@@ -31,9 +32,26 @@ Repair = [
 ]
 
 Building_type = [
-    ('Новостройка', 'Новостройка'),
     ('Панельный дом', 'Панельный дом'),
     ('Кирпичный дом', 'Кирпичный дом'),
+    ('Монолитный дом', 'Монолитный дом'),
+    ('Блочный дом', 'Блочный дом'),
+    ('Деревянный дом', 'Деревянный дом'),
+]
+
+Housing_type = [
+    ('Вторичный рынок', 'Вторичный рынок'),
+    ('Новостройка', 'Новостройка'),
+]
+
+Layout = [
+    ('Смежная', 'Смежная'),
+    ('Раздельная', 'Раздельная'),
+    ('Смежно-раздельная', 'Смежно-раздельная'),
+    ('Студия', 'Студия'),
+    ('Пентхаус', 'Пентхаус'),
+    ('Многоуровневая', 'Многоуровневая'),
+    ('Малосемейка', 'Малосемейка'),
 ]
 
 Location = [
@@ -44,40 +62,41 @@ Location = [
 
 
 class House(Model):
-    type = CharField(max_length=25, choices=Type_choise)
-    date_added = DateTimeField(null=True, auto_now_add=True)
+    type = CharField(max_length=25, choices=Type_choise, null=True)
+    housing_type = CharField(max_length=25, choices=Housing_type, null=True)
     title = CharField(max_length=255)
     bio = TextField()
     address = CharField(max_length=255)
     preview = ImageField(null=True, blank=True)
     price = IntegerField()
     size = IntegerField()
-    material = CharField(max_length=255, choices=Material_choise)
+    material = CharField(max_length=255, choices=Material_choise, null=True)
     rooms = IntegerField()
-    furniture = CharField(max_length=20, choices=Furniture)
-    repair = CharField(max_length=20, choices=Repair)
+    furniture = CharField(max_length=20, choices=Furniture, null=True)
+    repair = CharField(max_length=20, choices=Repair, null=True)
     near = TextField(null=True, blank=True)
     date_of_building = IntegerField(max_length=4, null=True, blank=True)
-    seller = ForeignKey(User,on_delete=CASCADE,null=True)
+    seller = ForeignKey(User, on_delete=CASCADE, null=True)
+    address = CharField(max_length=255, null=True)
+    number = IntegerField(default=0, null=True)
+    date_added = DateTimeField(null=True, auto_now_add=True)
+    convenience = TextField(null=True)
+    rent = BooleanField(default=False, null=True)
+    living_space = IntegerField(null=True)
+    ceiling_height = IntegerField(default=2, null=True)
     #################
     floor = IntegerField(null=True, blank=True)
     storeys = IntegerField(null=True, blank=True)
-    building_type = CharField(max_length=20, choices=Building_type)
+    building_type = CharField(max_length=20, choices=Building_type, null=True)
+    layout = CharField(max_length=34, choices=Layout, null=True)
     #################
-    living_space = IntegerField(null=True)
-    location = CharField(max_length=20, choices=Location)
-    convenience = TextField(null=True)
+    location = CharField(max_length=20, choices=Location, null=True)
 
     def __str__(self):
-        return self.title
+        return str(self.pk)
 
-
-class Image(Model):
-    house = ForeignKey(House, on_delete=CASCADE)
-    image = ImageField(blank=True, null=True)
-
-    def __str__(self):
-        return self.house.title
+    def home_title(self):
+        return self.title[:20]
 
 
 class Image(Model):
@@ -101,3 +120,23 @@ class Image(Model):
 
     def __str__(self):
         return str(self.house)
+
+
+class Message(Model):
+    text = CharField(max_length=100000)
+    sender = ForeignKey(User, on_delete=CASCADE,related_name='sender')
+    receiver = ForeignKey(User, on_delete=CASCADE,related_name='receiver')
+    time = DateTimeField(auto_now_add=True)
+    house = ForeignKey(House, on_delete=CASCADE, null=True)
+
+    def __str__(self):
+        return self.text[:20]
+
+class Chat(Model):
+    sender = ForeignKey(User, on_delete=CASCADE, related_name='sender1')
+    receiver = ForeignKey(User, on_delete=CASCADE, related_name='receiver1')
+    time = DateTimeField(auto_now_add=True)
+    house = ForeignKey(House, on_delete=CASCADE, null=True)
+
+    def __str__(self):
+        return str(self.pk)
